@@ -94,9 +94,24 @@ function handleClick(event) {
     return;
   }
 
-  const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}">
-`);
+  const instance = basicLightbox.create(
+    `<img class="modal-img" src="${event.target.dataset.source}">`,
+    {
+      onShow: (instance) => {
+        window.addEventListener("keydown", onEscPress);
+      },
+      onClose: (instance) => {
+        window.removeEventListener("keydown", onEscPress);
+      },
+    }
+  );
 
   instance.show();
+
+  function onEscPress(event) {
+    if (event.code === "Escape") {
+      console.log(event);
+      instance.close();
+    }
+  }
 }

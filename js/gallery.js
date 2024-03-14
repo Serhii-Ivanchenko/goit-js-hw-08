@@ -84,3 +84,19 @@ function createGalleryMarkup(arr) {
     .join("");
 }
 gallery.insertAdjacentHTML("beforeend", createGalleryMarkup(images));
+
+gallery.addEventListener("click", handleClick);
+
+function handleClick(event) {
+  event.preventDefault();
+
+  if (event.target === event.currentTarget) {
+    return;
+  }
+
+  const instance = basicLightbox.create(`
+    <img src="${event.target.dataset.source}">
+`);
+
+  instance.show();
+}
